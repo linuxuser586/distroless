@@ -3,7 +3,7 @@
 This repository contains docker images based on [distroless](https://github.com/GoogleContainerTools/distroless/).
 You will need [bazel](https://bazel.build/) to build the images or find them at [Docker Hub](https://hub.docker.com/).
 
-See [LICENSE](https://github.com/linuxuser586/apis/blob/master/LICENSE)
+See [LICENSE](https://github.com/linuxuser586/distroless/blob/master/LICENSE)
 
 ## Run
 
