@@ -1,0 +1,47 @@
+package(default_visibility = ["//visibility:public"])
+
+load("@io_bazel_rules_docker//container:image.bzl", "container_image")
+load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
+load("@debian_package//debs:deb_packages.bzl", "debian_package")
+
+container_image(
+    name = "base",
+    base = "@java_base//image",
+    debs = [
+        debian_package["dumb-init"],
+    ],
+    entrypoint = [
+        "dumb-init",
+        "--",
+        "java",
+        "-version",
+    ],
+    stamp = True,
+)
+
+pkg_tar(
+    name = "entrypoint_tar",
+    srcs = ["//entrypoint"],
+    mode = "0755",
+    package_dir = "/usr/local/bin",
+)
+
+container_image(
+    name = "debug",
+    base = ":base",
+    cmd = [
+        "sh",
+    ],
+    debs = [
+        debian_package["busybox"],
+    ],
+    entrypoint = [
+        "dumb-init",
+        "--",
+        "entrypoint.sh",
+    ],
+    stamp = True,
+    tars = [
+        ":entrypoint_tar",
+    ],
+)

@@ -1,0 +1,61 @@
+load("@io_bazel_rules_docker//container:image.bzl", "container_image")
+load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
+load("@debian_package//debs:deb_packages.bzl", "debian_package")
+load("@cassandra_package//debs:deb_packages.bzl", "cassandra_package")
+
+container_image(
+    name = "base",
+    base = "//java:base",
+    debs = [
+        debian_package["libjemalloc1"],
+        cassandra_package["cassandra"],
+    ],
+    entrypoint = [
+        "dumb-init",
+        "--",
+        "cassandra",
+    ],
+    env = {
+        "PUID": "9042",
+        "GUID": "9042",
+        "CASSANDRA_HOME": "/var/lib/cassandra",
+    },
+    ports = [
+        "7000",
+        "7001",
+        "7199",
+        "9042",
+        "9160",
+    ],
+    stamp = True,
+    volumes = [
+        "/var/lib/cassandra",
+    ],
+)
+
+pkg_tar(
+    name = "entrypoint_tar",
+    srcs = ["//entrypoint"],
+    mode = "0755",
+    package_dir = "/usr/local/bin",
+)
+
+container_image(
+    name = "debug",
+    base = ":base",
+    cmd = [
+        "sh",
+    ],
+    debs = [
+        debian_package["busybox"],
+    ],
+    entrypoint = [
+        "dumb-init",
+        "--",
+        "entrypoint.sh",
+    ],
+    stamp = True,
+    tars = [
+        ":entrypoint_tar",
+    ],
+)
