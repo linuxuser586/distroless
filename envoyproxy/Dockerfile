@@ -1,5 +1,5 @@
-# 1.11.0
-FROM envoyproxy/envoy@sha256:3b3eb76bc74c8e36e0ed3507844b6c12f69e9efa7588a7e35a29f90ee3e90067 AS build
+# 1.11.1
+FROM envoyproxy/envoy@sha256:9ef9c4fd6189fdb903929dc5aa0492a51d6783777de65e567382ac7d9a28106b AS build
 
 # debian stretch 2019-07-08
 FROM debian@sha256:397b2157a9ea8d7f16c613aded70284292106e8b813fb1ed5de8a8785310a26a AS debian
