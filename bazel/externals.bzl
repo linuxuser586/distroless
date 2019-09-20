@@ -18,13 +18,13 @@ def distroless_externals():
     java_image_repositories()
     container_pull(
         name = "base",
-        digest = "sha256:a4624843fb1d7d43d9e3d62f6d76b51b6e02b3d03221e29fef4e223d81ef3378",
+        digest = "sha256:e37cf3289c1332c5123cbf419a1657c8dad0811f2f8572433b668e13747718f8",
         registry = "gcr.io",
         repository = "distroless/base",
     )
     container_pull(
         name = "java_base",
-        digest = "sha256:a5aa2ef3d3902be516f53503ada27e85bb7dbed1546ab919c73f607ccf28a50d",
+        digest = "sha256:4d70e98aa99a53afe4acc661593fee3b0f8c92d5cfd4129db4cc77b85a3012d5",
         registry = "gcr.io",
         repository = "distroless/java",
     )
