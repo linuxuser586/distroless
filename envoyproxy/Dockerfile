@@ -1,5 +1,5 @@
-# 1.11.1
-FROM envoyproxy/envoy@sha256:9ef9c4fd6189fdb903929dc5aa0492a51d6783777de65e567382ac7d9a28106b AS build
+# v1.12.1
+FROM envoyproxy/envoy@sha256:c485247f63de16331fbe56aec8e9d8a83da76ca0fa8dc872691a09b8d99a314f AS build
 
 # debian stretch 2019-07-08
 FROM debian@sha256:397b2157a9ea8d7f16c613aded70284292106e8b813fb1ed5de8a8785310a26a AS debian
@@ -37,8 +37,8 @@ RUN make -j $(nproc)
 
 RUN strip libjaegertracing.so.${version} -o /libjaegertracing.so
 
-# 2019-07-05
-FROM linuxuser586/base@sha256:d0a7ebd7d97b29d34311aa0c3f4f1d7367ee7c6fc55f128208d77bce8d1376f7
+# 2019-09-20
+FROM linuxuser586/base@sha256:1c9395a69224a0be3ebe30436efca9692eb08a3b404627f3855b9c04b529a5d4
 
 COPY --from=build /usr/local/bin/envoy /
 
