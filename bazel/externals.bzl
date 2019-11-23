@@ -24,7 +24,7 @@ def distroless_externals():
     )
     container_pull(
         name = "java_base",
-        digest = "sha256:4d70e98aa99a53afe4acc661593fee3b0f8c92d5cfd4129db4cc77b85a3012d5",
+        digest = "sha256:a13ac1ce516ec5e49ae9dfd3b8183e9e8328180a65757d454e594a9ce6d1e35d",
         registry = "gcr.io",
         repository = "distroless/java",
     )
@@ -68,9 +68,9 @@ def _destroless_debs():
             "http://dl.bintray.com/apache/cassandra",
         ],
         packages = {
-            "cassandra": "pool/main/c/cassandra/cassandra_3.11.4_all.deb",
+            "cassandra": "pool/main/c/cassandra/cassandra_3.11.5_all.deb",
         },
         packages_sha256 = {
-            "cassandra": "8a9488211af39324e7cd18a21bd0acb2222e3116d5cfe80a02b58a9683a8ff36",
+            "cassandra": "7f65f18e21dc7e69b69bd09434e2afffb5f8d4fd2d64e1fb6d92819ca21e4d54",
         },
     )

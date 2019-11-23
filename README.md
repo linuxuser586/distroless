@@ -33,5 +33,5 @@ docker tag bazel/java:base linuxuser586/java
 
 ```sh
 bazel run //cassandra:base
-docker tag bazel/cassandra:base linuxuser586/cassandra:3.11.4-base
+docker tag bazel/cassandra:base linuxuser586/cassandra:3.11.5-base
 ```
