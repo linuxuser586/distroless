@@ -1,8 +1,8 @@
-# v1.12.2
-FROM envoyproxy/envoy@sha256:b36ee021fc4d285de7861dbaee01e7437ce1d63814ead6ae3e4dfcad4a951b2e AS build
+# v1.13.0
+FROM envoyproxy/envoy@sha256:8e63e2c9edbd6cb0d9f6604f1b38e28660dad16327242899652ecab19ec104b9 AS build
 
-# debian stretch 2019-07-08
-FROM debian@sha256:397b2157a9ea8d7f16c613aded70284292106e8b813fb1ed5de8a8785310a26a AS debian
+# debian stretch 2020-02-24
+FROM debian@sha256:ddb131307ad9c70ebf8c7962ba73c20101f68c7a511915aea3ad3b7ad47b9d20 AS debian
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update; \
