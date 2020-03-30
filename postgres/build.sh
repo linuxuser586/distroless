@@ -26,8 +26,8 @@ echo "ready to compile ${app_name}"
 cd /build/${app_name}
 
 ./configure --with-uuid=ossp --with-openssl
-make -j $(nproc)
-make install
+make world -j $(nproc)
+make install-world
 mkdir -p /postgres/data
 useradd -r -U -d /postgres -s /bin/bash postgres
 chown postgres:postgres /postgres/data
