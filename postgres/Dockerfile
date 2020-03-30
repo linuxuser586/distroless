@@ -11,7 +11,8 @@ RUN apt-get update; \
     libssl-dev \
     libreadline-dev \
     zlib1g-dev \
-    locales
+    locales \
+    less
 
 WORKDIR /build
 
@@ -28,6 +29,9 @@ FROM linuxuser586/base@sha256:1c9395a69224a0be3ebe30436efca9692eb08a3b404627f385
 # FROM gcr.io/distroless/base:debug
 
 ENV PATH=/usr/local/pgsql/bin:$PATH
+ENV TERM=xterm
+ENV SHLVL=1
+ENV PAGER less
 
 COPY --from=build /usr/local/pgsql /usr/local/pgsql
 
@@ -45,9 +49,13 @@ COPY --from=build /usr/bin/locale /usr/bin/locale
 COPY --from=build /lib/x86_64-linux-gnu/libreadline.so.7 /lib/x86_64-linux-gnu/libreadline.so.7
 COPY --from=build /lib/x86_64-linux-gnu/libtinfo.so.5 /lib/x86_64-linux-gnu/libtinfo.so.5
 COPY --from=build /lib/x86_64-linux-gnu/libz.so.1 /lib/x86_64-linux-gnu/libz.so.1
+COPY --from=build /bin/more /bin/more
+COPY --from=build /bin/less /bin/less
+COPY --from=build /lib/terminfo /lib/terminfo
+COPY --from=build /usr/share/tabset /usr/share/tabset
 
 # /bin/sh is need for initdb, which depends on popen
-COPY --from=build /bin/sh /bin/sh
+COPY --from=build /bin/dash /bin/sh
 
 COPY passwd /etc/passwd
 COPY group /etc/group
