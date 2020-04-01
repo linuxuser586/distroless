@@ -45,10 +45,11 @@ COPY --from=build /usr/share/i18n /usr/share/i18n
 COPY --from=build /usr/lib/locale /usr/lib/locale
 COPY --from=build /usr/bin/locale /usr/bin/locale
 
-# need for utilites
+# need for utilites and extensions
 COPY --from=build /lib/x86_64-linux-gnu/libreadline.so.7 /lib/x86_64-linux-gnu/libreadline.so.7
 COPY --from=build /lib/x86_64-linux-gnu/libtinfo.so.5 /lib/x86_64-linux-gnu/libtinfo.so.5
 COPY --from=build /lib/x86_64-linux-gnu/libz.so.1 /lib/x86_64-linux-gnu/libz.so.1
+COPY --from=build /usr/lib/x86_64-linux-gnu/libossp-uuid.so.16 /usr/lib/x86_64-linux-gnu/libossp-uuid.so.16
 COPY --from=build /bin/more /bin/more
 COPY --from=build /bin/less /bin/less
 COPY --from=build /lib/terminfo /lib/terminfo
