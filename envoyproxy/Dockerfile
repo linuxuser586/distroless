@@ -1,15 +1,16 @@
-# v1.13.0
-FROM envoyproxy/envoy@sha256:8e63e2c9edbd6cb0d9f6604f1b38e28660dad16327242899652ecab19ec104b9 AS build
+# v1.14.1
+FROM envoyproxy/envoy@sha256:ccaf9e0135bf498fb8396ad49defd7f8567bf706411d9a707efb3978fb842c89 AS build
 
-# debian stretch 2020-02-24
-FROM debian@sha256:ddb131307ad9c70ebf8c7962ba73c20101f68c7a511915aea3ad3b7ad47b9d20 AS debian
+# debian stretch 2020-04-17
+FROM debian@sha256:d844caef45253dab4cb7543b5781f529c1c3f140fcf9cd6172e1d6cb616a51c3 AS debian
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update; \
     apt-get install -y \
     build-essential \
     cmake \
-    wget
+    wget \
+    dumb-init
 
 WORKDIR /build
 
@@ -37,12 +38,15 @@ RUN make -j $(nproc)
 
 RUN strip libjaegertracing.so.${version} -o /libjaegertracing.so
 
-# 2019-09-20
-FROM linuxuser586/base@sha256:1c9395a69224a0be3ebe30436efca9692eb08a3b404627f3855b9c04b529a5d4
+
+
+# 2020-04-17
+FROM gcr.io/distroless/base@sha256:2b0a8e9a13dcc168b126778d9e947a7081b4d2ee1ee122830d835f176d0e2a70
 
 COPY --from=build /usr/local/bin/envoy /
 
 COPY --from=debian /libjaegertracing.so /usr/local/lib/
+COPY --from=debian /usr/bin/dumb-init /usr/bin/dumb-init
 
 COPY envoy.yaml /etc/envoy/
 
