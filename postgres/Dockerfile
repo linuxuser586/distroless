@@ -12,7 +12,8 @@ RUN apt-get update; \
     libreadline-dev \
     zlib1g-dev \
     locales \
-    less
+    less \
+    dumb-init
 
 WORKDIR /build
 
@@ -24,16 +25,16 @@ RUN ./build.sh
 
 RUN echo "host all all all md5" >> /postgres/data/pg_hba.conf
 
-# 2019-09-20
-FROM linuxuser586/base@sha256:1c9395a69224a0be3ebe30436efca9692eb08a3b404627f3855b9c04b529a5d4
+# 2020-05-01
+FROM gcr.io/distroless/base@sha256:2b0a8e9a13dcc168b126778d9e947a7081b4d2ee1ee122830d835f176d0e2a70
 # FROM gcr.io/distroless/base:debug
 
 ENV PATH=/usr/local/pgsql/bin:$PATH
 ENV TERM=xterm
 ENV SHLVL=1
-ENV PAGER less
 
 COPY --from=build /usr/local/pgsql /usr/local/pgsql
+COPY --from=build /usr/bin/dumb-init /usr/bin/dumb-init
 
 # default database
 COPY --from=build /postgres /postgres
@@ -49,7 +50,6 @@ COPY --from=build /usr/bin/locale /usr/bin/locale
 COPY --from=build /lib/x86_64-linux-gnu/libreadline.so.7 /lib/x86_64-linux-gnu/libreadline.so.7
 COPY --from=build /lib/x86_64-linux-gnu/libtinfo.so.5 /lib/x86_64-linux-gnu/libtinfo.so.5
 COPY --from=build /lib/x86_64-linux-gnu/libz.so.1 /lib/x86_64-linux-gnu/libz.so.1
-COPY --from=build /usr/lib/x86_64-linux-gnu/libossp-uuid.so.16 /usr/lib/x86_64-linux-gnu/libossp-uuid.so.16
 COPY --from=build /bin/more /bin/more
 COPY --from=build /bin/less /bin/less
 COPY --from=build /lib/terminfo /lib/terminfo

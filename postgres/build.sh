@@ -5,8 +5,8 @@ set -o pipefail
 
 echo "starting build"
 
-version="11.6"
-vhash="49924f7ff92965fdb20c86e0696f2dc9f8553e1563124ead7beedf8910c13170"
+version="12.2"
+vhash="ad1dcc4c4fc500786b745635a9e1eba950195ce20b8913f50345bb7d5369b5de"
 url="https://ftp.postgresql.org/pub/source/v${version}/postgresql-${version}.tar.bz2"
 app_name=postgresql-${version}
 file=${app_name}.tar.bz2
@@ -25,9 +25,11 @@ echo "ready to compile ${app_name}"
 
 cd /build/${app_name}
 
-./configure --with-uuid=ossp --with-openssl
+./configure --with-openssl
 make world -j $(nproc)
 make install-world
+rm -rf /usr/local/pgsql/share/doc
+rm -rf /usr/local/pgsql/share/man
 mkdir -p /postgres/data
 useradd -r -U -d /postgres -s /bin/bash postgres
 chown postgres:postgres /postgres/data
