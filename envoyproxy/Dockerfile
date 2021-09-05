@@ -1,8 +1,8 @@
-# v1.18.3
-FROM envoyproxy/envoy@sha256:55d35e368436519136dbd978fa0682c49d8ab99e4d768413510f226762b30b07 AS build
+# v1.19.1
+FROM envoyproxy/envoy@sha256:ac6a29af5bee160a1b4425d7c7a41a4d8a08a7f9dd7f225f21b5375f6439457a AS build
 
-# debian:buster-20210511
-FROM debian@sha256:acf7795dc91df17e10effee064bd229580a9c34213b4dba578d64768af5d8c51 AS debian
+# debian:buster-20210905
+FROM debian@sha256:cdb5ae50fedfda0bc2f9e4d303683ab6096c84db9e97b0bbfea0653549aeb3f8 AS debian
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update; \
@@ -40,8 +40,8 @@ RUN strip libjaegertracing.so.${version} -o /libjaegertracing.so
 
 
 
-# gcr.io/distroless/base-debian10 2021-06-12
-FROM gcr.io/distroless/base-debian10@sha256:6ec6da1888b18dd971802c2a58a76a7702902b4c9c1be28f38e75e871cedc2df
+# gcr.io/distroless/base-debian10 2021-09-02
+FROM gcr.io/distroless/base-debian10@sha256:d8244d4756b5dc43f2c198bf4e37e6f8a017f13fdd7f6f64ec7ac7228d3b191e
 
 COPY --from=build /usr/local/bin/envoy /
 
